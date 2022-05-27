@@ -11,7 +11,8 @@ type NFT struct {
 	Metadata     string `json:"metadata"`
 }
 
-type FindAllNFTsResponse struct {
-	Total  int   `json:"total"`
-	Result []NFT `json:"result"`
+type MoralisNFTsResponse struct {
+	Total  int    `json:"total"`
+	Cursor string `json:"cursor"`
+	Result []NFT  `json:"result"`
 }

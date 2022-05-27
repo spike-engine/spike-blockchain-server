@@ -21,6 +21,7 @@ type FindAllNFTsService struct {
 
 func (s *FindAllNFTsService) FindAllNFTs() {
 	client := resty.New()
+
 	resp, err := client.R().
 		SetHeader("Accept", "application/json").
 		SetHeader("x-api-key", "7L9fFRFaUpKOlFoUZi7SN0UBiUWbHgf6tTenyqg19TjPRTGuRS46UMRierHQ3XIs").
@@ -29,14 +30,11 @@ func (s *FindAllNFTsService) FindAllNFTs() {
 		log.Panic(err)
 	}
 
-	var res serialize.FindAllNFTsResponse
+	var res serialize.MoralisNFTsResponse
 	err = json.Unmarshal(resp.Body(), &res)
 	if err != nil {
 		log.Panic(err)
 	}
-	nfts := res.Result
-
-	_ = nfts
 }
 
 func (s *FindAllNFTsService) url() string {
