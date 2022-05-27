@@ -1,6 +1,6 @@
 package nft
 
-type nft struct {
+type NFT struct {
 	TokenAddress string `json:"token_address"`
 	TokenId      string `json:"token_id"`
 	Amount       string `json:"amount"`
@@ -11,7 +11,7 @@ type nft struct {
 	Metadata     string `json:"metadata"`
 }
 
-type FindAllNftsResponse struct {
+type FindAllNFTsResponse struct {
 	Total  int   `json:"total"`
-	Result []nft `json:"result"`
+	Result []NFT `json:"result"`
 }

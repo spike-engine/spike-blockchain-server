@@ -11,7 +11,7 @@ import (
 	"spike-blockchain-server/service"
 )
 
-type FindAllNftsService struct {
+type FindAllNFTsService struct {
 	Chain   string `json:"chain"`
 	Format  string `json:"format,omitempty"`
 	Limit   int32  `json:"limit,omitempty"`
@@ -19,7 +19,7 @@ type FindAllNftsService struct {
 	Address string `json:"address"`
 }
 
-func (s *FindAllNftsService) FindAllEthNfts() {
+func (s *FindAllNFTsService) FindAllNFTs() {
 	client := resty.New()
 	resp, err := client.R().
 		SetHeader("Accept", "application/json").
@@ -29,17 +29,16 @@ func (s *FindAllNftsService) FindAllEthNfts() {
 		log.Panic(err)
 	}
 
-	var res serialize.FindAllNftsResponse
+	var res serialize.FindAllNFTsResponse
 	err = json.Unmarshal(resp.Body(), &res)
 	if err != nil {
 		log.Panic(err)
 	}
-	res.Total = len(res.Result)
 	nfts := res.Result
 
 	_ = nfts
 }
 
-func (s *FindAllNftsService) url() string {
+func (s *FindAllNFTsService) url() string {
 	return fmt.Sprintf("%s%s/nft?chain=%s&format=%s&limit=%d&cursor=%s", service.MORALIS_API, s.Address, s.Chain, s.Format, s.Limit, s.Cursor)
 }
