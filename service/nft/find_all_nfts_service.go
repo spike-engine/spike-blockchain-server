@@ -4,10 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/go-resty/resty/v2"
 
-	serialize "spike-blockchain-server/serialize/nft"
+	nftserializer "spike-blockchain-server/serializer/nft"
 	"spike-blockchain-server/service"
 )
 
@@ -24,13 +25,13 @@ func (s *FindAllNFTsService) FindAllNFTs() {
 
 	resp, err := client.R().
 		SetHeader("Accept", "application/json").
-		SetHeader("x-api-key", "7L9fFRFaUpKOlFoUZi7SN0UBiUWbHgf6tTenyqg19TjPRTGuRS46UMRierHQ3XIs").
+		SetHeader("x-api-key", os.Getenv("MORALIS_KEY")).
 		Get(s.url())
 	if err != nil {
 		log.Panic(err)
 	}
 
-	var res serialize.MoralisNFTsResponse
+	var res nftserializer.MoralisNFTsResponse
 	err = json.Unmarshal(resp.Body(), &res)
 	if err != nil {
 		log.Panic(err)

@@ -1,5 +1,13 @@
 package main
 
+import (
+	"spike-blockchain-server/config"
+	"spike-blockchain-server/server"
+)
+
 func main() {
-	println("hello, spike blockchain server")
+	config.Init()
+
+	r := server.NewRouter()
+	r.Run(":3000")
 }
