@@ -1,8 +1,13 @@
 package nft
 
 import (
+	"github.com/joho/godotenv"
 	"testing"
 )
+
+func init() {
+	godotenv.Load("../../.env")
+}
 
 func TestEthAllNFTsService(t *testing.T) {
 	service := FindAllNFTsService{
