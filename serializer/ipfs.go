@@ -1,6 +1,6 @@
 package serializer
 
-type PinFile struct {
+type Pin struct {
 	IpfsHash    string `json:"IpfsHash"`
 	PinSize     int    `json:"PinSize"`
 	Timestamp   string `json:"Timestamp"`

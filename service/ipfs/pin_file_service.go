@@ -65,7 +65,7 @@ func (service *PinFileService) PinFile() serializer.Response {
 		}
 	}
 
-	var res serializer.PinFile
+	var res serializer.Pin
 	err = json.Unmarshal(resp.Body(), &res)
 	if err != nil {
 		return serializer.Response{

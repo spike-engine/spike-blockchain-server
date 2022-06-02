@@ -3,5 +3,7 @@ package ipfs
 const (
 	PROTOCOL        = "https"
 	DOMAIN          = "api.pinata.cloud"
-	PINATA_PIN_FILE = PROTOCOL + "://" + DOMAIN + "/pinning/pinFileToIPFS"
+	INDEX_ADDR      = PROTOCOL + "://" + DOMAIN
+	PINATA_PIN_FILE = INDEX_ADDR + "/pinning/pinFileToIPFS"
+	PINATA_PIN_JSON = INDEX_ADDR + "/pinning/pinJSONToIPFS"
 )

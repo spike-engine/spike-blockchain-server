@@ -1,6 +1,6 @@
 package model
 
-type PinataConfig struct {
+type PinataParams struct {
 	PinataOptions  PinataOptions  `json:"pinataOptions"`
 	PinataMetaData PinataMetaData `json:"pinataMetadata"`
 	PinataContent  string         `json:"pinataContent"`
@@ -27,7 +27,7 @@ type CustomPinPolicy struct {
 }
 
 var (
-	DefaultPinataConfig = PinataConfig{
+	DefaultPinataConfig = PinataParams{
 		PinataOptions: PinataOptions{
 			CidVersion: 0,
 			CustomPinPolicy: CustomPinPolicy{
@@ -40,7 +40,7 @@ var (
 			},
 		},
 		PinataMetaData: PinataMetaData{
-			Name: "hello, pinata",
+			Name: "Default Pinata MetaData",
 		},
 	}
 )
