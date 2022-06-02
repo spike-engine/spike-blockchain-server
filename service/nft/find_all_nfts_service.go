@@ -8,7 +8,6 @@ import (
 	"github.com/go-resty/resty/v2"
 
 	"spike-blockchain-server/serializer"
-	"spike-blockchain-server/service"
 )
 
 type FindAllNFTsService struct {
@@ -62,5 +61,5 @@ func (s *FindAllNFTsService) FindAllNFTs() serializer.Response {
 }
 
 func (s *FindAllNFTsService) url() string {
-	return fmt.Sprintf("%s%s/nft?chain=%s&format=%s&limit=%d&cursor=%s", service.MORALIS_API, s.Address, s.Chain, s.Format, s.Limit, s.Cursor)
+	return fmt.Sprintf("%s%s/nft?chain=%s&format=%s&limit=%d&cursor=%s", MORALIS_API, s.Address, s.Chain, s.Format, s.Limit, s.Cursor)
 }
