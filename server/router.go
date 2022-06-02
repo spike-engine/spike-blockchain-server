@@ -18,6 +18,14 @@ func NewRouter() *gin.Engine {
 		{
 			nft.GET("all", api.FindAllNFTs)
 		}
+
+		ipfs := v1.Group("/ipfs")
+		{
+			ipfs.POST("pin/file", api.PinFile)
+			ipfs.POST("pin/json", api.PinJSON)
+			//ipfs.GET("file", )
+			//ipfs.GET("json", )
+		}
 	}
 	return r
 }
