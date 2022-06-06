@@ -6,3 +6,6 @@ type Pin struct {
 	Timestamp   string `json:"Timestamp"`
 	IsDuplicate bool   `json:"isDuplicate"`
 }
+
+type SaveResult struct {
+}

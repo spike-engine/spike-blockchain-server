@@ -13,7 +13,7 @@ import (
 )
 
 type PinFileService struct {
-	Filepath string `json:"filepath"`
+	FilePath string `json:"filePath"`
 }
 
 func (service *PinFileService) PinFile() serializer.Response {
@@ -34,7 +34,7 @@ func (service *PinFileService) PinFile() serializer.Response {
 		}
 	}
 
-	f, err := ioutil.ReadFile(service.Filepath)
+	f, err := ioutil.ReadFile(service.FilePath)
 	if err != nil {
 		return serializer.Response{
 			Code:  402,

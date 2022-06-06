@@ -13,7 +13,7 @@ func init() {
 
 func TestPinFileDuplicate(t *testing.T) {
 	service := PinFileService{
-		Filepath: "../../.env.example",
+		FilePath: "../../.env.example",
 	}
 
 	res := service.PinFile()
