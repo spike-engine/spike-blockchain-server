@@ -1,4 +1,4 @@
-package nft
+package serializer
 
 type NFT struct {
 	TokenAddress string `json:"token_address"`
@@ -11,7 +11,7 @@ type NFT struct {
 	Metadata     string `json:"metadata"`
 }
 
-type MoralisNFTsResponse struct {
+type MoralisNFTs struct {
 	Total  int    `json:"total"`
 	Cursor string `json:"cursor"`
 	Result []NFT  `json:"result"`

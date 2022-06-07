@@ -3,24 +3,22 @@ package nft
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/go-resty/resty/v2"
 
-	nftserializer "spike-blockchain-server/serializer/nft"
-	"spike-blockchain-server/service"
+	"spike-blockchain-server/serializer"
 )
 
 type FindAllNFTsService struct {
-	Chain   string `json:"chain"`
-	Format  string `json:"format,omitempty"`
-	Limit   int32  `json:"limit,omitempty"`
-	Cursor  string `json:"cursor,omitempty"`
-	Address string `json:"address"`
+	Chain   string `form:"chain"   json:"chain"   binding:"required"`
+	Format  string `form:"format"  json:"format,omitempty"`
+	Limit   int32  `form:"limit"   json:"limit,omitempty"`
+	Cursor  string `form:"cursor"  json:"cursor,omitempty"`
+	Address string `form:"address" json:"address" binding:"required"`
 }
 
-func (s *FindAllNFTsService) FindAllNFTs() {
+func (s *FindAllNFTsService) FindAllNFTs() serializer.Response {
 	client := resty.New()
 
 	resp, err := client.R().
@@ -28,16 +26,40 @@ func (s *FindAllNFTsService) FindAllNFTs() {
 		SetHeader("x-api-key", os.Getenv("MORALIS_KEY")).
 		Get(s.url())
 	if err != nil {
-		log.Panic(err)
+		return serializer.Response{
+			Code:  400,
+			Error: err.Error(),
+		}
+	}
+	if resp.IsError() {
+		return serializer.Response{
+			Code:  resp.StatusCode(),
+			Error: resp.String(),
+		}
 	}
 
-	var res nftserializer.MoralisNFTsResponse
+	var res serializer.MoralisNFTs
 	err = json.Unmarshal(resp.Body(), &res)
 	if err != nil {
-		log.Panic(err)
+		return serializer.Response{
+			Code:  401,
+			Error: err.Error(),
+		}
+	}
+
+	if resp.IsSuccess() {
+		return serializer.Response{
+			Code: resp.StatusCode(),
+			Data: res,
+		}
+	}
+
+	return serializer.Response{
+		Code: 300,
+		Data: resp.String(),
 	}
 }
 
 func (s *FindAllNFTsService) url() string {
-	return fmt.Sprintf("%s%s/nft?chain=%s&format=%s&limit=%d&cursor=%s", service.MORALIS_API, s.Address, s.Chain, s.Format, s.Limit, s.Cursor)
+	return fmt.Sprintf("%s%s/nft?chain=%s&format=%s&limit=%d&cursor=%s", MORALIS_API, s.Address, s.Chain, s.Format, s.Limit, s.Cursor)
 }

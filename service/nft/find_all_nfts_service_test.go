@@ -1,8 +1,10 @@
 package nft
 
 import (
-	"github.com/joho/godotenv"
+	"fmt"
 	"testing"
+
+	"github.com/joho/godotenv"
 )
 
 func init() {
@@ -16,7 +18,7 @@ func TestEthAllNFTsService(t *testing.T) {
 		Limit:   50,
 		Address: "0x4f025c68c27f860946dc9fa2814bef2a6a7e2ce0",
 	}
-	service.FindAllNFTs()
+	fmt.Println(service.FindAllNFTs())
 }
 
 func TestEthAllNFTsServiceWithSmallAmount(t *testing.T) {
@@ -25,5 +27,5 @@ func TestEthAllNFTsServiceWithSmallAmount(t *testing.T) {
 		Format:  "decimal",
 		Address: "0x3FE63F0f8469497223A9eb800be62D75b8B8e6Eb",
 	}
-	service.FindAllNFTs()
+	fmt.Println(service.FindAllNFTs())
 }
