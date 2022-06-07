@@ -8,6 +8,9 @@ import (
 func NewRouter() *gin.Engine {
 	r := gin.Default()
 
+	// to use
+	//r.Use(middleware.EthSignatureVerify())
+
 	v1 := r.Group("/api/v1")
 	{
 		v1.GET("ping", func(c *gin.Context) {
@@ -23,8 +26,8 @@ func NewRouter() *gin.Engine {
 		{
 			ipfs.POST("pin/file", api.PinFile)
 			ipfs.POST("pin/json", api.PinJSON)
-			//ipfs.GET("file", )
-			//ipfs.GET("json", )
+			ipfs.GET("file", api.DownloadFile)
+			ipfs.GET("json", api.DownloadJSON)
 		}
 	}
 	return r
