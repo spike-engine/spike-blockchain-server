@@ -3,7 +3,6 @@ package ipfs
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
 	"os"
 
 	"github.com/go-resty/resty/v2"
@@ -13,7 +12,7 @@ import (
 )
 
 type PinFileService struct {
-	Filepath string `json:"filepath"`
+	File []byte `json:"file"`
 }
 
 func (service *PinFileService) PinFile() serializer.Response {
@@ -34,19 +33,11 @@ func (service *PinFileService) PinFile() serializer.Response {
 		}
 	}
 
-	f, err := ioutil.ReadFile(service.Filepath)
-	if err != nil {
-		return serializer.Response{
-			Code:  402,
-			Error: err.Error(),
-		}
-	}
-
 	client := resty.New()
 	resp, err := client.R().
 		SetHeader("pinata_api_key", os.Getenv("PINATA_API_KEY")).
 		SetHeader("pinata_secret_api_key", os.Getenv("PINATA_SECRET_KEY")).
-		SetFileReader("file", ".env.example", bytes.NewReader(f)).
+		SetFileReader("file", ".env.example", bytes.NewReader(service.File)).
 		SetFormData(map[string]string{
 			"pinataOptions":  string(options),
 			"pinataMetadata": string(metadata),
