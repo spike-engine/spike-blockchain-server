@@ -33,7 +33,7 @@ func (s *FindAllNFTsService) FindAllNFTs() serializer.Response {
 	}
 	if resp.IsError() {
 		return serializer.Response{
-			Code:  resp.StatusCode(),
+			Code:  401,
 			Error: resp.String(),
 		}
 	}
@@ -42,20 +42,20 @@ func (s *FindAllNFTsService) FindAllNFTs() serializer.Response {
 	err = json.Unmarshal(resp.Body(), &res)
 	if err != nil {
 		return serializer.Response{
-			Code:  401,
+			Code:  402,
 			Error: err.Error(),
 		}
 	}
 
 	if resp.IsSuccess() {
 		return serializer.Response{
-			Code: resp.StatusCode(),
+			Code: 200,
 			Data: res,
 		}
 	}
 
 	return serializer.Response{
-		Code: 300,
+		Code: 403,
 		Data: resp.String(),
 	}
 }
