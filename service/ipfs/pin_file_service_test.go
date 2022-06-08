@@ -1,10 +1,10 @@
 package ipfs
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/joho/godotenv"
+	"github.com/stretchr/testify/assert"
 )
 
 func init() {
@@ -16,6 +16,5 @@ func TestPinFileDuplicate(t *testing.T) {
 		Filepath: "../../.env.example",
 	}
 
-	res := service.PinFile()
-	fmt.Println(res)
+	assert.Equal(t, service.PinFile().Code, 200)
 }
