@@ -1,10 +1,12 @@
 package ipfs
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/joho/godotenv"
+	"github.com/stretchr/testify/assert"
+
+	"spike-blockchain-server/serializer"
 )
 
 func init() {
@@ -16,6 +18,6 @@ func TestPinJsonDuplicate(t *testing.T) {
 		Json: `{"pinata":["file","json"],"len":2}`,
 	}
 
-	res := service.PinJson()
-	fmt.Println(res)
+	assert.Equal(t, service.PinJson().Code, 200)
+	assert.Equal(t, service.PinJson().Data.(serializer.Pin).IsDuplicate, true)
 }

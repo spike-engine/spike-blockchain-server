@@ -1,9 +1,10 @@
 package ipfs
 
 import (
-	"fmt"
-	"github.com/joho/godotenv"
 	"testing"
+
+	"github.com/joho/godotenv"
+	"github.com/stretchr/testify/assert"
 )
 
 func init() {
@@ -14,12 +15,14 @@ func TestDownloadJSON(t *testing.T) {
 	service := DownloadService{
 		IpfsHash: "QmfNxKabtsdNgdLCib1AXaVrMvyLaFD2UbMmsmoRNJTU8w",
 	}
-	fmt.Println(service.Download())
+
+	assert.Equal(t, service.Download().Code, 200)
 }
 
 func TestDownloadFile(t *testing.T) {
 	service := DownloadService{
 		IpfsHash: "QmcQUrnWMMGs2rYcQTipSyhwYFNA8Vp65q245mFfQpYXy2",
 	}
-	fmt.Println(service.Download())
+
+	assert.Equal(t, service.Download().Code, 200)
 }
