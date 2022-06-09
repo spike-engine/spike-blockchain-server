@@ -1,9 +1,8 @@
 package ipfs
 
 import (
-	"bytes"
 	"encoding/json"
-	"io/ioutil"
+	"mime/multipart"
 	"os"
 
 	"github.com/go-resty/resty/v2"
@@ -13,11 +12,13 @@ import (
 )
 
 type PinFileService struct {
-	Filepath string `json:"filepath"`
+	File *multipart.FileHeader `form:"file" json:"file" binding:"required"`
+	Name string                `form:"name" json:"name"`
 }
 
 func (service *PinFileService) PinFile() serializer.Response {
 	config := model.DefaultPinataConfig
+	config.PinataMetadata.Name = service.File.Filename
 	options, err := json.Marshal(config.PinataOptions)
 	if err != nil {
 		return serializer.Response{
@@ -26,7 +27,7 @@ func (service *PinFileService) PinFile() serializer.Response {
 		}
 	}
 
-	metadata, err := json.Marshal(config.PinataMetaData)
+	metadata, err := json.Marshal(config.PinataMetadata)
 	if err != nil {
 		return serializer.Response{
 			Code:  401,
@@ -34,7 +35,7 @@ func (service *PinFileService) PinFile() serializer.Response {
 		}
 	}
 
-	f, err := ioutil.ReadFile(service.Filepath)
+	file, err := service.File.Open()
 	if err != nil {
 		return serializer.Response{
 			Code:  402,
@@ -46,7 +47,7 @@ func (service *PinFileService) PinFile() serializer.Response {
 	resp, err := client.R().
 		SetHeader("pinata_api_key", os.Getenv("PINATA_API_KEY")).
 		SetHeader("pinata_secret_api_key", os.Getenv("PINATA_SECRET_KEY")).
-		SetFileReader("file", ".env.example", bytes.NewReader(f)).
+		SetFileReader("file", service.File.Filename, file).
 		SetFormData(map[string]string{
 			"pinataOptions":  string(options),
 			"pinataMetadata": string(metadata),

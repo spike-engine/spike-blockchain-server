@@ -1,10 +1,10 @@
 package ipfs
 
 import (
-	"fmt"
-	"github.com/go-resty/resty/v2"
 	"os"
 
+	"github.com/go-resty/resty/v2"
+	
 	"spike-blockchain-server/serializer"
 )
 
@@ -17,7 +17,6 @@ func (service *DownloadService) Download() serializer.Response {
 
 	resp, err := client.R().Get(service.url())
 	if err != nil {
-		fmt.Println(err.Error())
 		return serializer.Response{
 			Code:  400,
 			Error: err.Error(),
