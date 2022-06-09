@@ -12,9 +12,8 @@ func init() {
 }
 
 func TestPinFileDuplicate(t *testing.T) {
-	service := PinFileService{
-		Filepath: "../../.env.example",
-	}
+	// TODO generate a multipart.FileHeader
+	service := PinFileService{}
 
 	assert.Equal(t, service.PinFile().Code, 200)
 }

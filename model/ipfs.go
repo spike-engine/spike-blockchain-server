@@ -2,7 +2,7 @@ package model
 
 type PinataParams struct {
 	PinataOptions  PinataOptions  `json:"pinataOptions"`
-	PinataMetaData PinataMetadata `json:"pinataMetadata"`
+	PinataMetadata PinataMetadata `json:"pinataMetadata"`
 	PinataContent  string         `json:"pinataContent"`
 }
 
@@ -39,8 +39,8 @@ var (
 				},
 			},
 		},
-		PinataMetaData: PinataMetadata{
-			Name: "Default Pinata MetaData",
+		PinataMetadata: PinataMetadata{
+			Name: "Default Pinata Metadata",
 		},
 	}
 )
