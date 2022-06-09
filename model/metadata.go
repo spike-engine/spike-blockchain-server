@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-type SpikeMetaData struct {
+type SpikeMetadata struct {
 	Name        string       `json:"name"`
 	Description string       `json:"description"`
 	Image       string       `json:"image"`
@@ -24,7 +24,7 @@ type Attributes struct {
 	Value     string `json:"value"`
 }
 
-func (service *SpikeMetaData) ValidateMetaData() error {
+func (service *SpikeMetadata) ValidateMetaData() error {
 	if len(service.Name) == 0 || len(service.Name) >= 10 {
 		return errors.New("metadata name is Illegal")
 	}

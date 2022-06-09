@@ -12,7 +12,7 @@ type CreateMetadataService struct {
 }
 
 func (service *CreateMetadataService) CreateMetadata() serializer.Response {
-	metaData := model.SpikeMetaData{}
+	metaData := model.SpikeMetadata{}
 	err := json.Unmarshal(service.MetaJson, &metaData)
 	if err != nil {
 		return serializer.Response{
