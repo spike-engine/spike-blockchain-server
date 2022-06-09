@@ -11,12 +11,14 @@ import (
 )
 
 type PinJsonService struct {
-	Json string `json:"json"`
+	Json string `form:"json" json:"json" binding:"required"`
+	Name string `form:"name" json:"name" binding:"required"`
 }
 
 func (service *PinJsonService) PinJson() serializer.Response {
 	config := model.DefaultPinataConfig
 	config.PinataContent = service.Json
+	config.PinataMetadata.Name = service.Name
 	options, err := json.Marshal(config.PinataOptions)
 	if err != nil {
 		return serializer.Response{
@@ -25,7 +27,7 @@ func (service *PinJsonService) PinJson() serializer.Response {
 		}
 	}
 
-	metadata, err := json.Marshal(config.PinataMetaData)
+	metadata, err := json.Marshal(config.PinataMetadata)
 	if err != nil {
 		return serializer.Response{
 			Code:  401,
