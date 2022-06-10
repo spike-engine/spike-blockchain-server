@@ -24,20 +24,20 @@ type Attributes struct {
 	Value     string `json:"value"`
 }
 
-func (service *SpikeMetadata) ValidateMetaData() error {
-	if len(service.Name) == 0 || len(service.Name) >= 10 {
+func (model *SpikeMetadata) ValidateMetaData() error {
+	if len(model.Name) == 0 || len(model.Name) >= 10 {
 		return errors.New("metadata name is Illegal")
 	}
 
-	if len(service.Description) == 0 {
+	if len(model.Description) == 0 {
 		return errors.New("Description cannot be empty ")
 	}
 
-	if len(service.SpikeInfo.SpikeModelType) == 0 || len(service.SpikeInfo.Version) == 0 || len(service.SpikeInfo.SpikeModelURL) == 0 {
+	if len(model.SpikeInfo.SpikeModelType) == 0 || len(model.SpikeInfo.Version) == 0 || len(model.SpikeInfo.SpikeModelURL) == 0 {
 		return errors.New("SpikeInfo cannot be empty ")
 	}
 
-	for _, attribute := range service.Attributes {
+	for _, attribute := range model.Attributes {
 		if len(attribute.Value) == 0 || len(attribute.TraitType) == 0 {
 			return errors.New("attributes is Illegal")
 		}
