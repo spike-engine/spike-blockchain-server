@@ -3,11 +3,11 @@
 #### 1. Create a file named .env and Configure these options
 
 ```
-MORALIS_KEY="XXXXXXXXXXXXXXX"
+MORALIS_KEY=""
 
-PINATA_API_KEY="XXXXXXXXXXXX"
-PINATA_SECRET_KEY="XXXXXXXXX"
-PINATA_GATEWAY="XXXXXXXXXXXX"
+PINATA_API_KEY=""
+PINATA_SECRET_KEY=""
+PINATA_GATEWAY=""
 ```
 
 ##### 1.1 What is Pinata and how to get PINATA_X?
@@ -40,7 +40,7 @@ func main() {
 	config.Init()
 
 	r := server.NewRouter()
-	r.Run(":40000")
+	r.Run(":3000")
 }
 ```
 
