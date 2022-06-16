@@ -2,6 +2,8 @@ package config
 
 import (
 	"github.com/joho/godotenv"
+	
+	"spike-blockchain-server/cache"
 )
 
 func Init() {
@@ -9,4 +11,6 @@ func Init() {
 	if err != nil {
 		panic(err)
 	}
+
+	cache.Redis()
 }
