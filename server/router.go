@@ -12,7 +12,8 @@ func NewRouter() *gin.Engine {
 
 	// to use
 	//r.Use(middleware.EthSignatureVerify())
-	r.Use(middleware.ApiKeyAuth())
+	//r.Use(middleware.ApiKeyAuth())
+	r.Use(middleware.LoggerToFile())
 
 	v1 := r.Group("/api/v1")
 	{
