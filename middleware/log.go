@@ -38,6 +38,6 @@ func LoggerToFile() gin.HandlerFunc {
 			"duration": duration.Seconds(),
 			"ip":       ip,
 			"headers":  c.Request.Header,
-		}).Info()
+		}).Info(c.Writer.Header().Get("Content-Type"))
 	}
 }

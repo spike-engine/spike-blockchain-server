@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/go-resty/resty/v2"
-	
+
 	"spike-blockchain-server/serializer"
 )
 
@@ -29,10 +29,10 @@ func (service *DownloadService) Download() serializer.Response {
 			Error: resp.String(),
 		}
 	}
-
 	return serializer.Response{
 		Code: 200,
 		Data: resp.Body(),
+		Msg:  resp.Header().Get("Content-Type"),
 	}
 }
 
