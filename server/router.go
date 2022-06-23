@@ -2,7 +2,9 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
+
 	"spike-blockchain-server/api"
+	"spike-blockchain-server/middleware"
 )
 
 func NewRouter() *gin.Engine {
@@ -10,6 +12,8 @@ func NewRouter() *gin.Engine {
 
 	// to use
 	//r.Use(middleware.EthSignatureVerify())
+	//r.Use(middleware.ApiKeyAuth())
+	r.Use(middleware.LoggerToFile())
 
 	v1 := r.Group("/api/v1")
 	{

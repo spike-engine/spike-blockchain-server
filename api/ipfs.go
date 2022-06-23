@@ -31,7 +31,7 @@ func DownloadFile(c *gin.Context) {
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.Download()
 		if res.Code == 200 {
-			c.Writer.Write(res.Data.([]byte))
+			c.Data(200, res.Msg, res.Data.([]byte))
 		} else {
 			c.JSON(200, res)
 		}

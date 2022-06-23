@@ -5,8 +5,10 @@ go 1.17
 require (
 	github.com/ethereum/go-ethereum v1.10.17
 	github.com/gin-gonic/gin v1.7.7
+	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-resty/resty/v2 v2.6.0
 	github.com/joho/godotenv v1.4.0
+	github.com/sirupsen/logrus v1.7.1
 	github.com/stretchr/testify v1.7.1
 )
 
@@ -21,6 +23,7 @@ require (
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
+	github.com/magefile/mage v1.10.0 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
