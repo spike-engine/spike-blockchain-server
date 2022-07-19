@@ -2,9 +2,9 @@ package ipfs
 
 import (
 	"encoding/json"
-	"os"
-
 	"github.com/go-resty/resty/v2"
+	"os"
+	"strings"
 
 	"spike-blockchain-server/model"
 	"spike-blockchain-server/serializer"
@@ -39,12 +39,12 @@ func (service *PinJsonService) PinJson() serializer.Response {
 	resp, err := client.R().
 		SetHeader("pinata_api_key", os.Getenv("PINATA_API_KEY")).
 		SetHeader("pinata_secret_api_key", os.Getenv("PINATA_SECRET_KEY")).
+		SetFileReader("file", service.Name, strings.NewReader(service.Json)).
 		SetFormData(map[string]string{
-			"pinataContent":  config.PinataContent,
 			"pinataOptions":  string(options),
 			"pinataMetadata": string(metadata),
 		}).
-		Post(PINATA_PIN_JSON)
+		Post(PINATA_PIN_FILE)
 	if err != nil {
 		return serializer.Response{
 			Code:  402,
