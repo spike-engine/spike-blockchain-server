@@ -30,6 +30,7 @@ func NewRouter() *gin.Engine {
 		{
 			ipfs.POST("pin/file", api.PinFile)
 			ipfs.POST("pin/json", api.PinJSON)
+			ipfs.POST("pin/jsonfile", api.PinJSONFile)
 			ipfs.GET("file", api.DownloadFile)
 			ipfs.GET("json", api.DownloadJSON)
 		}
