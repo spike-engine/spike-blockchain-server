@@ -1,15 +1,17 @@
 package cache
 
 import (
+	"github.com/go-redis/redis"
+	logger "github.com/ipfs/go-log"
 	"os"
 	"strconv"
-
-	"github.com/go-redis/redis"
 )
+
+var log = logger.Logger("cache")
 
 var RedisClient *redis.Client
 
-func Redis() {
+func Redis() error {
 	db, _ := strconv.ParseUint(os.Getenv("REDIS_DB"), 10, 64)
 	client := redis.NewClient(
 		&redis.Options{
@@ -23,7 +25,10 @@ func Redis() {
 
 	if err != nil {
 		// log connecting to redis failed
+		log.Error("redis init err : ", err)
+		return err
 	}
 
 	RedisClient = client
+	return nil
 }
