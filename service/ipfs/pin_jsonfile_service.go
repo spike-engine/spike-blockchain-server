@@ -1,24 +1,26 @@
 package ipfs
 
 import (
+	"bytes"
 	"encoding/json"
-	"github.com/go-resty/resty/v2"
+	"io/ioutil"
+	"mime/multipart"
 	"os"
-	"strings"
+
+	"github.com/go-resty/resty/v2"
 
 	"spike-blockchain-server/model"
 	"spike-blockchain-server/serializer"
 )
 
-type PinJsonService struct {
-	Json string `form:"json" json:"json" binding:"required"`
-	Name string `form:"name" json:"name" binding:"required"`
+type PinJsonFileService struct {
+	File *multipart.FileHeader `form:"file" json:"file" binding:"required"`
+	Name string                `form:"name" json:"name"`
 }
 
-func (service *PinJsonService) PinJson() serializer.Response {
+func (service *PinJsonFileService) PinJsonFile() serializer.Response {
 	config := model.DefaultPinataConfig
-	config.PinataContent = service.Json
-	config.PinataMetadata.Name = service.Name
+	config.PinataMetadata.Name = service.File.Filename
 	options, err := json.Marshal(config.PinataOptions)
 	if err != nil {
 		return serializer.Response{
@@ -35,11 +37,35 @@ func (service *PinJsonService) PinJson() serializer.Response {
 		}
 	}
 
+	file, err := service.File.Open()
+	if err != nil {
+		return serializer.Response{
+			Code:  402,
+			Error: err.Error(),
+		}
+	}
+
+	all, err := ioutil.ReadAll(file)
+	if err != nil {
+		return serializer.Response{
+			Code:  403,
+			Error: err.Error(),
+		}
+	}
+	var out bytes.Buffer
+	err = json.Indent(&out, all, "", "\t")
+	if err != nil {
+		return serializer.Response{
+			Code:  404,
+			Error: err.Error(),
+		}
+	}
+
 	client := resty.New()
 	resp, err := client.R().
 		SetHeader("pinata_api_key", os.Getenv("PINATA_API_KEY")).
 		SetHeader("pinata_secret_api_key", os.Getenv("PINATA_SECRET_KEY")).
-		SetFileReader("file", service.Name, strings.NewReader(service.Json)).
+		SetFileReader("file", service.File.Filename, bytes.NewReader(out.Bytes())).
 		SetFormData(map[string]string{
 			"pinataOptions":  string(options),
 			"pinataMetadata": string(metadata),
@@ -47,13 +73,13 @@ func (service *PinJsonService) PinJson() serializer.Response {
 		Post(PINATA_PIN_FILE)
 	if err != nil {
 		return serializer.Response{
-			Code:  402,
+			Code:  405,
 			Error: err.Error(),
 		}
 	}
 	if resp.IsError() {
 		return serializer.Response{
-			Code:  403,
+			Code:  406,
 			Error: resp.String(),
 		}
 	}
@@ -62,10 +88,11 @@ func (service *PinJsonService) PinJson() serializer.Response {
 	err = json.Unmarshal(resp.Body(), &res)
 	if err != nil {
 		return serializer.Response{
-			Code:  405,
+			Code:  407,
 			Error: err.Error(),
 		}
 	}
+
 	return serializer.Response{
 		Code: 200,
 		Data: res,

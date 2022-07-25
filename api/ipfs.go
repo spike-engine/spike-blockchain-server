@@ -26,6 +26,16 @@ func PinJSON(c *gin.Context) {
 	}
 }
 
+func PinJSONFile(c *gin.Context) {
+	var service service.PinJsonFileService
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.PinJsonFile()
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, err.Error())
+	}
+}
+
 func DownloadFile(c *gin.Context) {
 	var service service.DownloadService
 	if err := c.ShouldBind(&service); err == nil {
