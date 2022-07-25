@@ -4,16 +4,16 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"spike-blockchain-server/api"
-	"spike-blockchain-server/middleware"
+	"spike-blockchain-server/chain"
 )
 
-func NewRouter() *gin.Engine {
+func NewRouter(chainApi *chain.BscListener) *gin.Engine {
 	r := gin.Default()
 
 	// to use
 	//r.Use(middleware.EthSignatureVerify())
 	//r.Use(middleware.ApiKeyAuth())
-	r.Use(middleware.LoggerToFile())
+	//r.Use(middleware.LoggerToFile())
 
 	v1 := r.Group("/api/v1")
 	{
@@ -33,6 +33,12 @@ func NewRouter() *gin.Engine {
 			ipfs.POST("pin/jsonfile", api.PinJSONFile)
 			ipfs.GET("file", api.DownloadFile)
 			ipfs.GET("json", api.DownloadJSON)
+		}
+		chain := v1.Group("/chain")
+		{
+			chain.POST("tx/isPending", chainApi.QueryTxIsPendingByHash)
+			chain.POST("tx/status", chainApi.QueryTxStatusByHash)
+			chain.POST("nft/metadata", chainApi.QueryNftMetadata)
 		}
 	}
 	return r
