@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"spike-blockchain-server/constants"
 
 	"github.com/go-resty/resty/v2"
 
@@ -61,5 +62,5 @@ func (s *FindAllNFTsService) FindAllNFTs() serializer.Response {
 }
 
 func (s *FindAllNFTsService) url() string {
-	return fmt.Sprintf("%s%s/nft?chain=%s&format=%s&limit=%d&cursor=%s", MORALIS_API, s.Address, s.Chain, s.Format, s.Limit, s.Cursor)
+	return fmt.Sprintf("%s%s/nft?chain=%s&format=%s&limit=%d&cursor=%s", constants.MORALIS_API, s.Address, s.Chain, s.Format, s.Limit, s.Cursor)
 }
