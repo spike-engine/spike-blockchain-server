@@ -40,6 +40,11 @@ func NewRouter(chainApi *chain.BscListener) *gin.Engine {
 			chain.POST("tx/status", chainApi.QueryTxStatusByHash)
 			chain.POST("nft/metadata", chainApi.QueryNftMetadata)
 		}
+		wallet := v1.Group("/wallet")
+		{
+			wallet.GET("erc20", api.ERC20TxRecord)
+			wallet.GET("native", api.NativeTxRecord)
+		}
 	}
 	return r
 }
